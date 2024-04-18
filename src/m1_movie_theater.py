@@ -1,5 +1,5 @@
 ###############################################################################
-# TODO: 1. (3 pts)
+# DONE: 1. (3 pts)
 #
 #   For this module, we are going to create a basic program to handle movie
 #   times at a movie theater. For our purposes, a movie is going to be defined
@@ -29,8 +29,13 @@
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
 
+def show_movies(movies):
+    print("Movies: ")
+    for movie in movies:
+        print(movie)
+
 ###############################################################################
-# TODO: 2. (3 pts)
+# DONE: 2. (3 pts)
 #
 #   For this _todo_, write a function called get_ticket() that takes one
 #   parameter:
@@ -41,7 +46,7 @@
 #       - If the movie has tickets available (that is, it is greater than 0), it
 #         should set the value of num_of_tickets to one less than what it was
 #         before and print:
-#           "Success! You know have a ticket for <MOVIE TITLE HERE>!"
+#           "Success! You now have a ticket for <MOVIE TITLE HERE>!"
 #       - If the movie's num_of_tickets value is not greater than 0 (that is,
 #         it is there are not tickets available), it should print:
 #           "There are currently no tickets available for that movie."
@@ -52,8 +57,16 @@
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
 
+def get_ticket(movie):
+    num_of_tickets = movie["num_of_tickets"]
+    if num_of_tickets > 0:
+        print(f"Success! You now have a ticket for {movie["title"]}!")
+        movie["num_of_tickets"] -= 1
+    else:
+        print("There are currently no tickets available for that movie")
+
 ###############################################################################
-# TODO: 3. (9 pts)
+# DONE: 3. (9 pts)
 #
 #   Now, let's create our movie showtimes system.
 #
@@ -83,3 +96,53 @@
 #
 #   Once you have done this, then change the above _TODO_ to DONE.
 ###############################################################################
+
+movies = []
+
+def main():
+    print("Welcome film enjoyer!")
+    while True:
+        movie = {
+        "title": "",
+        "duration": "",
+        "start_time": "",
+        "theater_num": "",
+        "num_of_tickets": 0
+        }
+        title = input("Please give a movie title: ")
+        if title == "end":
+            break
+        movie["title"] = title
+        duration = input("Please give the duration of the movie in minutes: ")
+        if duration == "end":
+            break
+        movie["duration"] = duration
+        start_time = input("Please give the start time of the movie: ")
+        if start_time == "end":
+            break
+        movie["start_time"] = start_time
+        theater_num = input("Please give the theater number of the movie: ")
+        if theater_num == "end":
+            break
+        movie["theater_num"] = theater_num
+        num_of_tickets = input("Please give the number of tickets available for the movie: ")
+        if num_of_tickets == "end":
+            break
+        num_of_tickets = int(num_of_tickets)
+        movie["num_of_tickets"] = num_of_tickets
+        movies.append(movie)
+    while True:
+        show_movies(movies)
+        ticket_title = input("Which movie would you like to buy a ticket for? ")
+        if ticket_title == "end":
+            break
+        for movie in movies:
+            if movie["title"] == ticket_title:
+                selected_movie = movie
+                break
+        if selected_movie:
+            get_ticket(selected_movie)
+
+main()
+
+# chatgpt assisted me on lines 139 - 144 to avoid an error saying "string indices must be integers, not 'str'" occuring in line 62
